@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import Search from "./components/Search";
+import UserList from "./components/UserList";
 
 function App() {
   const [users, setUsers] = useState([]);
@@ -70,123 +72,15 @@ function App() {
         </p>
       </div>
 
-      <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full mb-5">
-        <div className="flex-1">
-          <label className="input input-bordered flex items-center gap-2 w-full">
-            <svg
-              className="h-[1em] opacity-50 shrink-0"
-              xmlns="http://w3.org"
-              viewBox="0 0 24 24"
-            >
-              <g
-                strokeLinejoin="round"
-                strokeLinecap="round"
-                strokeWidth="2.5"
-                fill="none"
-                stroke="currentColor"
-              >
-                <circle cx="11" cy="11" r="8"></circle>
-                <path d="m21 21-4.3-4.3"></path>
-              </g>
-            </svg>
-            <input
-              type="search"
-              required
-              placeholder="Search..."
-              className="grow"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </label>
-        </div>
+      <Search
+        search={search}
+        setSearch={setSearch}
+        selectedCompany={selectedCompany}
+        onCompanyChange={handleCompanyChange}
+        users={users}
+      />
 
-        <div className="dropdown dropdown-end">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-outline flex items-center justify-between min-w-[12rem] w-full sm:w-auto gap-2"
-          >
-            <span className="truncate">{selectedCompany}</span>
-            <svg
-              xmlns="http://w3.org"
-              className="h-4 w-4 opacity-60 shrink-0"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M19 9l-7 7-7-7"
-              />
-            </svg>
-          </div>
-
-          <ul
-            tabIndex={0}
-            className="dropdown-content menu bg-base-100 rounded-box z-[10] w-52 p-2 shadow-lg mt-1 border border-base-200"
-          >
-            {users.map((user) => (
-              <li key={user.id}>
-                <button
-                  type="button"
-                  onClick={() => handleCompanyChange(user.company.name)}
-                  className={
-                    selectedCompany === user.company.name ? "active" : ""
-                  }
-                >
-                  {user.company.name}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredUsers.map((user) => (
-          <div
-            key={user.id}
-            className="card glass shadow-md hover:scale-[1.01] transition-transform"
-          >
-            <div className="card-body p-5">
-              <div className="flex items-start justify-between gap-2">
-                <h2 className="card-title text-lg font-bold">{user.name}</h2>
-                <span className="badge badge-neutral text-xs font-medium truncate max-w-[120px]">
-                  {user.company.name}
-                </span>
-              </div>
-
-              <div className="space-y-1.5 mt-2 text-xs opacity-80">
-                <div className="flex items-center gap-2">
-                  <span className="font-semibold w-16">📧 Email:</span>
-                  <span className="truncate">{user.email}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="font-semibold w-16">📞 Phone:</span>
-                  <span>{user.phone}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="font-semibold w-16">🏙️ City:</span>
-                  <span>{user.address.city}</span>
-                </div>
-              </div>
-
-              <div className="card-actions justify-end border-t border-base-content/10 pt-3 mt-3">
-                <button className="btn btn-primary btn-sm normal-case">
-                  View Details
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-      {filteredUsers.length === 0 && (
-        <div role="alert" className="alert alert-warning alert-outline">
-          <span>User is not found!</span>
-        </div>
-      )}
+      <UserList filteredUsers={filteredUsers} />
     </div>
   );
 }
