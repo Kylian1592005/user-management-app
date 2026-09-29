@@ -10,9 +10,12 @@ function App() {
   useEffect(() => {
     async function fetchUsers() {
       try {
-        await fetch(apiUrl)
-          .then((response) => response.json())
-          .then((data) => setUsers(data));
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = response.json();
+        setUsers(data);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -28,11 +31,14 @@ function App() {
   return (
     <>
       <h1>Users Lists</h1>
-      <ul>
+      <div>
         {users.map((user) => (
-          <li key={user.id}>{user.name}</li>
+          <div key={user.id}>
+            <h2>Name: {user.name}</h2>
+            <p>{user.Username}</p>
+          </div>
         ))}
-      </ul>
+      </div>  
     </>
   );
 }
