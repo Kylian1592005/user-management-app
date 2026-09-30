@@ -3,7 +3,6 @@ import { Link } from "react-router";
 export default function UserCard({user }) {
   return (
     <div
-      key={user.id}
       className="card glass shadow-md hover:scale-[1.01] transition-transform"
     >
       <div className="card-body p-5">

@@ -6,7 +6,7 @@ export default function Router() {
   return (
     <Routes>
       <Route index element={<Users />} />
-      <Route path="users" element={<Users />} />
+      {/* <Route path="users" element={<Users />} /> */}
       <Route path="users/:id" element={<UserDetails />} />
     </Routes>
   );
