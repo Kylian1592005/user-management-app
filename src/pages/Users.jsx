@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
-import "./App.css";
-import Search from "./components/Search";
-import UserList from "./components/UserList";
+import "./Users.css";
+import Search from "../components/Search";
+import UserList from "../components/UserList";
+import { apiUrl } from "../data/data";
 
-function App() {
-  const [users, setUsers] = useState([]);
+function Users() {
+  const [usersLists, setUsersLists] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [search, setSearch] = useState("");
   const [selectedCompany, setSelectedCompany] = useState("All companies");
-  const apiUrl = "https://jsonplaceholder.typicode.com/users";
 
   useEffect(() => {
     async function fetchUsers() {
@@ -19,7 +19,7 @@ function App() {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        setUsers(data);
+        setUsersLists(data);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -27,13 +27,13 @@ function App() {
       }
     }
     fetchUsers();
-  }, [apiUrl]);
+  }, []);
 
   const handleCompanyChange = (company) => {
     setSelectedCompany(company);
   };
 
-  const filteredUsers = users.filter((user) => {
+  const filteredUsers = usersLists.filter((user) => {
     const matchUser = user.name.toLowerCase().includes(search.toLowerCase());
 
     const matchCompany =
@@ -77,7 +77,7 @@ function App() {
         setSearch={setSearch}
         selectedCompany={selectedCompany}
         onCompanyChange={handleCompanyChange}
-        users={users}
+        users={usersLists}
       />
 
       <UserList filteredUsers={filteredUsers} />
@@ -85,4 +85,4 @@ function App() {
   );
 }
 
-export default App;
+export default Users;

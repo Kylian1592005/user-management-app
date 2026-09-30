@@ -1,4 +1,6 @@
-export default function UserCard({user}) {
+import { Link } from "react-router";
+
+export default function UserCard({user }) {
   return (
     <div
       key={user.id}
@@ -28,9 +30,9 @@ export default function UserCard({user}) {
         </div>
 
         <div className="card-actions justify-end border-t border-base-content/10 pt-3 mt-3">
-          <button className="btn btn-primary btn-sm normal-case">
+          <Link to={`users/${user.id}`} className="btn btn-primary btn-sm normal-case">
             View Details
-          </button>
+          </Link>
         </div>
       </div>
     </div>

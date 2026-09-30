@@ -1,11 +1,12 @@
 import { Route, Routes } from "react-router";
-import App from "../App";
-import UserDetails from "../components/UserDetails";
+import Users from "../pages/Users";
+import UserDetails from "../pages/UserDetails";
 
 export default function Router() {
   return (
     <Routes>
-      <Route index element={<App />} />
+      <Route index element={<Users />} />
+      <Route path="users" element={<Users />} />
       <Route path="users/:id" element={<UserDetails />} />
     </Routes>
   );
