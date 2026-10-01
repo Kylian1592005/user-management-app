@@ -5,15 +5,24 @@ import UserList from "../components/UserList";
 import { apiUrl } from "../data/data";
 
 function Users() {
-  const [usersLists, setUsersLists] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [usersLists, setUsersLists] = useState(() => {
+    const storedData = localStorage.getItem("users");
+    return storedData ? JSON.parse(storedData) : [];
+  });
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [search, setSearch] = useState("");
   const [selectedCompany, setSelectedCompany] = useState("All companies");
 
   useEffect(() => {
+    const storedData = localStorage.getItem("users");
+
+    if (storedData) {
+      return;
+    }
     async function fetchUsers() {
       try {
+        setLoading(true);
         const response = await fetch(apiUrl);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -28,6 +37,12 @@ function Users() {
     }
     fetchUsers();
   }, []);
+
+  useEffect(() => {
+    if (usersLists.length > 0) {
+      localStorage.setItem("users", JSON.stringify(usersLists));
+    }
+  }, [usersLists]);
 
   const handleCompanyChange = (company) => {
     setSelectedCompany(company);
