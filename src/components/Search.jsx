@@ -1,4 +1,4 @@
-export default function Search({search, setSearch, selectedCompany, onCompanyChange, users}) {
+export default function Search({search, setSearch, selectedCompany, onCompanyChange, usersLists}) {
   return (
     
       <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full mb-5">
@@ -58,7 +58,7 @@ export default function Search({search, setSearch, selectedCompany, onCompanyCha
             tabIndex={0}
             className="dropdown-content menu bg-base-100 rounded-box z-[10] w-52 p-2 shadow-lg mt-1 border border-base-200"
           >
-            {users.map((user) => (
+            {usersLists.map((user) => (
               <li key={user.id}>
                 <button
                   type="button"

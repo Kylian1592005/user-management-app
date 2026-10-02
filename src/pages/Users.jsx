@@ -1,48 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./Users.css";
 import Search from "../components/Search";
 import UserList from "../components/UserList";
-import { apiUrl } from "../data/data";
 
-function Users() {
-  const [usersLists, setUsersLists] = useState(() => {
-    const storedData = localStorage.getItem("users");
-    return storedData ? JSON.parse(storedData) : [];
-  });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+function Users({ usersLists, loading, error }) {
   const [search, setSearch] = useState("");
   const [selectedCompany, setSelectedCompany] = useState("All companies");
-
-  useEffect(() => {
-    const storedData = localStorage.getItem("users");
-
-    if (storedData) {
-      return;
-    }
-    async function fetchUsers() {
-      try {
-        setLoading(true);
-        const response = await fetch(apiUrl);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setUsersLists(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchUsers();
-  }, []);
-
-  useEffect(() => {
-    if (usersLists.length > 0) {
-      localStorage.setItem("users", JSON.stringify(usersLists));
-    }
-  }, [usersLists]);
 
   const handleCompanyChange = (company) => {
     setSelectedCompany(company);
@@ -92,7 +55,7 @@ function Users() {
         setSearch={setSearch}
         selectedCompany={selectedCompany}
         onCompanyChange={handleCompanyChange}
-        users={usersLists}
+        usersLists={usersLists}
       />
 
       <UserList filteredUsers={filteredUsers} />
