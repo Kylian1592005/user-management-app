@@ -1,11 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Users.css";
 import Search from "../components/Search";
 import UserList from "../components/UserList";
+import { useLocation, useNavigate } from "react-router";
 
 function Users({ usersLists, loading, error }) {
   const [search, setSearch] = useState("");
   const [selectedCompany, setSelectedCompany] = useState("All companies");
+  const location = useLocation();
+  const navigate = useNavigate();
+  const deleteInfo = location.state?.message;
+
+  useEffect(() => {
+    if (deleteInfo) {
+      const timer = setTimeout(() => {
+        navigate("/", {
+          state: null
+        })
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  });
 
   const handleCompanyChange = (company) => {
     setSelectedCompany(company);
@@ -41,6 +56,11 @@ function Users({ usersLists, loading, error }) {
 
   return (
     <div className="container mx-auto p-5">
+      {deleteInfo && (
+        <div role="alert" className="alert alert-success mb-6">
+          <span>{deleteInfo}</span>
+        </div>
+      )}
       <div className="text-center mb-8">
         <h1 className="text-4xl font-extrabold tracking-tight text-base-content mb-2">
           User Management
