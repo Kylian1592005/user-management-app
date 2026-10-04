@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./Users.css";
 import Search from "../components/Search";
 import UserList from "../components/UserList";
-import { useLocation, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 
 function Users({ usersLists, loading, error }) {
   const [search, setSearch] = useState("");
@@ -68,6 +68,7 @@ function Users({ usersLists, loading, error }) {
         <p className="text-sm text-base-content/60 max-w-md mx-auto">
           Manage and view all users from a single dashboard.
         </p>
+        <Link to="/new">Add User</Link>
       </div>
 
       <Search

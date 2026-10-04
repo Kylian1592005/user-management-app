@@ -1,7 +1,9 @@
-import { Route, Routes } from "react-router";
+import { Route, Routes } from "react-router-dom";
+import { useEffect, useState } from "react";
+
 import Users from "../pages/Users";
 import UserDetails from "../pages/UserDetails";
-import { useEffect, useState } from "react";
+import NewUser from "../pages/NewUser";
 import { apiUrl } from "../data/data";
 
 export default function Router() {
@@ -9,8 +11,9 @@ export default function Router() {
     const storedData = localStorage.getItem("users");
     return storedData ? JSON.parse(storedData) : [];
   });
+
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const storedData = localStorage.getItem("users");
@@ -18,13 +21,17 @@ export default function Router() {
     if (storedData) {
       return;
     }
+
     async function fetchUsers() {
       try {
         setLoading(true);
+        setError(null);
+
         const response = await fetch(apiUrl);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
+
         const data = await response.json();
         setUsersLists(data);
       } catch (err) {
@@ -33,19 +40,18 @@ export default function Router() {
         setLoading(false);
       }
     }
+
     fetchUsers();
   }, []);
 
   useEffect(() => {
-    if (usersLists.length > 0) {
-      localStorage.setItem("users", JSON.stringify(usersLists));
-    }
+    localStorage.setItem("users", JSON.stringify(usersLists));
   }, [usersLists]);
 
   return (
     <Routes>
       <Route
-        index
+        path="/"
         element={
           <Users
             usersLists={usersLists}
@@ -64,6 +70,12 @@ export default function Router() {
             loading={loading}
             error={error}
           />
+        }
+      />
+      <Route
+        path="new"
+        element={
+          <NewUser usersLists={usersLists} setUsersLists={setUsersLists} />
         }
       />
     </Routes>
