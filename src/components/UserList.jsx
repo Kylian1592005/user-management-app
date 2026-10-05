@@ -1,11 +1,11 @@
 import UserCard from "./UserCard";
 
-export default function UserList({ filteredUsers }) {
+export default function UserList({ currentUsers }) {
   return (
     <div className="w-full">
-      {filteredUsers.length > 0 ? (
+      {currentUsers.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredUsers.map((user) => (
+          {currentUsers.map((user) => (
            <UserCard key={user.id} user={user} />
           ))}
         </div>

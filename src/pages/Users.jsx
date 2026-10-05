@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import "./Users.css";
 import Search from "../components/Search";
 import UserList from "../components/UserList";
 import { useLocation, useNavigate } from "react-router";
+import Pagination from "../components/Pagination";
 
 function Users({ usersLists, loading, error }) {
   const [search, setSearch] = useState("");
@@ -10,13 +10,14 @@ function Users({ usersLists, loading, error }) {
   const location = useLocation();
   const navigate = useNavigate();
   const deleteInfo = location.state?.message;
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     if (deleteInfo) {
       const timer = setTimeout(() => {
         navigate("/", {
-          state: null
-        })
+          state: null,
+        });
       }, 3000);
       return () => clearTimeout(timer);
     }
@@ -35,6 +36,13 @@ function Users({ usersLists, loading, error }) {
 
     return matchUser && matchCompany;
   });
+
+  const usersPerPage = 6;
+  const currentUsers = filteredUsers.slice(
+    (currentPage - 1) * usersPerPage,
+    currentPage * usersPerPage,
+  );
+  const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
 
   if (loading) {
     return (
@@ -61,7 +69,7 @@ function Users({ usersLists, loading, error }) {
           <span>{deleteInfo}</span>
         </div>
       )}
-      <div className="text-center mb-8">
+      <div className="text-center mb-2">
         <h1 className="text-4xl font-extrabold tracking-tight text-base-content mb-2">
           User Management
         </h1>
@@ -78,7 +86,13 @@ function Users({ usersLists, loading, error }) {
         usersLists={usersLists}
       />
 
-      <UserList filteredUsers={filteredUsers} />
+      <UserList currentUsers={currentUsers} />
+
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
     </div>
   );
 }
