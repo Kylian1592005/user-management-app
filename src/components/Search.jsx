@@ -73,6 +73,14 @@ export default function Search({
           tabIndex={0}
           className="dropdown-content menu bg-base-100 rounded-box z-[10] w-52 p-2 shadow-lg mt-1 border border-base-200"
         >
+          <li>
+            <button
+              type="button"
+              onClick={() => onCompanyChange("All companies")}
+            >
+              All companies
+            </button>
+          </li>
           {usersLists.map((user) => (
             <li key={user.id}>
               <button
