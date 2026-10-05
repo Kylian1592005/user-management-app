@@ -12,6 +12,6 @@
 JSONPlaceholder Users API
 
 ## Routes
-- /users
+- /
 - /users/:id
-- /new
+- /users/new
