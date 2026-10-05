@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 import Users from "../pages/Users";
 import UserDetails from "../pages/UserDetails";
-import NewUser from "../pages/NewUser";
+import NewUserForm from "../pages/NewUserForm";
 import { apiUrl } from "../data/data";
 
 export default function Router() {
@@ -73,9 +73,9 @@ export default function Router() {
         }
       />
       <Route
-        path="new"
+        path="users/new"
         element={
-          <NewUser usersLists={usersLists} setUsersLists={setUsersLists} />
+          <NewUserForm usersLists={usersLists} setUsersLists={setUsersLists} />
         }
       />
     </Routes>

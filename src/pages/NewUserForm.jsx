@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function NewUser({ usersLists, setUsersLists }) {
+export default function NewUserForm({ usersLists, setUsersLists }) {
   const [formData, setFormData] = useState({
     name: "",
     username: "",

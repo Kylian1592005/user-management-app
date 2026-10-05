@@ -39,7 +39,7 @@ export default function Search({
       </div>
 
       <div>
-        <Link to="/new" className="btn btn-primary">
+        <Link to="users/new" className="btn btn-primary">
           Add User
         </Link>
       </div>
