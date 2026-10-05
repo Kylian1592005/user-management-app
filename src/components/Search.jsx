@@ -33,7 +33,9 @@ export default function Search({
             placeholder="Search..."
             className="grow"
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
           />
         </label>
       </div>
